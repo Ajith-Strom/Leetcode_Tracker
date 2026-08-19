@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { DueProblem } from '@/lib/types';
 import DifficultyBadge from '@/components/DifficultyBadge';
+import TagPill from '@/components/TagPill';
+import { formatDate } from '@/lib/format';
 
 export default function RevisionList({ problems }: { problems: DueProblem[] }) {
   if (problems.length === 0) {
@@ -18,6 +20,7 @@ export default function RevisionList({ problems }: { problems: DueProblem[] }) {
           <tr className="border-b border-border bg-surface text-left text-xs text-text-muted">
             <th className="px-4 py-2.5 font-medium">Title</th>
             <th className="px-4 py-2.5 font-medium">Difficulty</th>
+            <th className="px-4 py-2.5 font-medium">Tags</th>
             <th className="px-4 py-2.5 font-medium">Last Revised</th>
             <th className="px-4 py-2.5 font-medium">Days Overdue</th>
           </tr>
@@ -39,8 +42,15 @@ export default function RevisionList({ problems }: { problems: DueProblem[] }) {
               <td className="px-4 py-2.5">
                 <DifficultyBadge difficulty={p.difficulty} />
               </td>
+              <td className="px-4 py-2.5">
+                <div className="flex flex-wrap gap-1">
+                  {p.tags.map((tag) => (
+                    <TagPill key={tag} tag={tag} />
+                  ))}
+                </div>
+              </td>
               <td className="px-4 py-2.5 text-text-muted whitespace-nowrap">
-                {new Date(p.last_revised).toLocaleDateString()}
+                {formatDate(p.last_revised)}
               </td>
               <td className="px-4 py-2.5">
                 <span className="inline-flex items-center rounded-full bg-hard/15 px-2 py-0.5 text-xs font-medium text-hard">

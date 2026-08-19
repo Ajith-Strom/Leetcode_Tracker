@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Problem } from '@/lib/types';
 import DifficultyBadge from '@/components/DifficultyBadge';
 import TagPill from '@/components/TagPill';
+import { formatDate } from '@/lib/format';
 
 export default function ProblemTable({ problems }: { problems: Problem[] }) {
   if (problems.length === 0) {
@@ -50,7 +51,7 @@ export default function ProblemTable({ problems }: { problems: Problem[] }) {
                 </div>
               </td>
               <td className="px-4 py-2.5 text-text-muted whitespace-nowrap">
-                {new Date(p.first_solved_date).toLocaleDateString()}
+                {formatDate(p.first_solved_date)}
               </td>
             </tr>
           ))}

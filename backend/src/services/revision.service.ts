@@ -10,6 +10,7 @@ export interface DueProblem {
   title: string;
   leetcode_slug: string;
   difficulty: string;
+  tags: string[];
   last_revised: string;
   days_since: number;
 }
@@ -28,15 +29,26 @@ export async function getDueProblems(): Promise<DueProblem[]> {
 
   const [rows] = await pool.query<RowDataPacket[]>(
     `SELECT p.id, p.title, p.leetcode_slug, p.difficulty,
+            GROUP_CONCAT(DISTINCT t.name) AS tag_names,
             COALESCE(MAX(n.created_at), p.first_solved_date) AS last_revised,
             DATEDIFF(CURDATE(), COALESCE(MAX(n.created_at), p.first_solved_date)) AS days_since
      FROM problems p
      LEFT JOIN notes n ON n.problem_id = p.id AND n.type = 'review'
+     LEFT JOIN problems_tags pt ON pt.problem_id = p.id
+     LEFT JOIN tags t ON t.id = pt.tag_id
      GROUP BY p.id
      HAVING days_since > ?
      ORDER BY days_since DESC`,
     [intervalDays]
   );
 
-  return rows as DueProblem[];
+  return rows.map((r) => ({
+    id: r.id,
+    title: r.title,
+    leetcode_slug: r.leetcode_slug,
+    difficulty: r.difficulty,
+    tags: r.tag_names ? (r.tag_names as string).split(',') : [],
+    last_revised: r.last_revised,
+    days_since: r.days_since,
+  }));
 }

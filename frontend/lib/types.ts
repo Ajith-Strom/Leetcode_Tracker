@@ -29,6 +29,7 @@ export interface DueProblem {
   title: string;
   leetcode_slug: string;
   difficulty: Difficulty;
+  tags: string[];
   last_revised: string;
   days_since: number;
 }

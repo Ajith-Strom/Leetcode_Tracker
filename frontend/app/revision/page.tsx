@@ -1,5 +1,5 @@
 import { getDueProblems, getSettings } from '@/lib/api';
-import RevisionList from '@/components/RevisionList';
+import RevisionBoard from '@/components/RevisionBoard';
 import RevisionIntervalForm from '@/components/RevisionIntervalForm';
 import PageHeader from '@/components/PageHeader';
 
@@ -13,7 +13,7 @@ export default async function RevisionPage() {
         description={`${dueProblems.length} problem${dueProblems.length === 1 ? '' : 's'} overdue`}
         action={<RevisionIntervalForm currentDays={settings.revision_interval_days} />}
       />
-      <RevisionList problems={dueProblems} />
+      <RevisionBoard problems={dueProblems} />
     </main>
   );
 }

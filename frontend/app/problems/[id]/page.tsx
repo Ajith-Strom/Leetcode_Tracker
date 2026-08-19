@@ -4,6 +4,7 @@ import NoteForm from '@/components/NoteForm';
 import NoteList from '@/components/NoteList';
 import DifficultyBadge from '@/components/DifficultyBadge';
 import TagPill from '@/components/TagPill';
+import { formatDate } from '@/lib/format';
 
 export default async function ProblemDetailPage({
   params,
@@ -32,7 +33,7 @@ export default async function ProblemDetailPage({
         <h1 className="text-xl font-semibold text-text mb-1">{problem.title}</h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
           <span>
-            Solved {new Date(problem.first_solved_date).toLocaleDateString()}
+            Solved {formatDate(problem.first_solved_date)}
           </span>
           <span>·</span>
           <a

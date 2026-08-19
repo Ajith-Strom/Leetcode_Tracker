@@ -1,4 +1,5 @@
 import { Note } from '@/lib/types';
+import { formatDateTime } from '@/lib/format';
 
 export default function NoteList({ notes }: { notes: Note[] }) {
   if (notes.length === 0) {
@@ -23,7 +24,7 @@ export default function NoteList({ notes }: { notes: Note[] }) {
               {note.type}
             </span>
             <span className="text-xs text-text-muted">
-              {new Date(note.created_at).toLocaleString()}
+              {formatDateTime(note.created_at)}
             </span>
           </div>
           <p className="text-sm text-text whitespace-pre-wrap">{note.content}</p>
