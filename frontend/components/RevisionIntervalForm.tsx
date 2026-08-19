@@ -31,14 +31,10 @@ export default function RevisionIntervalForm({ currentDays }: { currentDays: num
         min={1}
         value={days}
         onChange={(e) => setDays(Number(e.target.value))}
-        className="w-16 rounded-md border border-border bg-surface px-2 py-1 text-sm text-text focus:border-accent focus:outline-none"
+        className="w-16 rounded-lg border border-white/10 bg-white/5 backdrop-blur-sm px-2 py-1 text-sm text-text focus:border-accent focus:outline-none"
       />
       <span className="text-sm text-text-muted">days</span>
-      <button
-        type="submit"
-        disabled={saving}
-        className="rounded-md border border-border bg-surface-hover px-3 py-1 text-sm text-text transition-colors hover:border-accent disabled:opacity-60"
-      >
+      <button type="submit" disabled={saving} className="btn-secondary">
         {saving ? 'Saving...' : 'Save'}
       </button>
     </form>

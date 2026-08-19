@@ -55,7 +55,7 @@ export default async function DashboardPage() {
               View all →
             </Link>
           </div>
-          <div className="rounded-lg border border-border bg-surface p-4">
+          <div className="glass-panel p-4">
             {streakStats.activity.some((d) => d.count > 0) ? (
               <ActivityHeatmap activity={streakStats.activity} />
             ) : (
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
               View all →
             </Link>
           </div>
-          <div className="rounded-lg border border-border bg-surface p-4">
+          <div className="glass-panel p-4">
             {weakestTags.length === 0 ? (
               <p className="text-sm text-text-muted">No data yet.</p>
             ) : (

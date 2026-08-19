@@ -36,20 +36,17 @@ export default function NoteForm({ problemId }: { problemId: number }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-lg border border-border bg-surface p-4"
-    >
+    <form onSubmit={handleSubmit} className="glass-panel p-4">
       <div className="flex gap-1 mb-3">
         {(['approach', 'review'] as NoteType[]).map((t) => (
           <button
             key={t}
             type="button"
             onClick={() => setType(t)}
-            className={`rounded-md px-3 py-1 text-xs font-medium capitalize transition-colors ${
+            className={`rounded-lg px-3 py-1 text-xs font-medium capitalize transition-colors ${
               type === t
                 ? 'bg-accent/15 text-accent'
-                : 'text-text-muted hover:bg-surface-hover'
+                : 'text-text-muted hover:bg-white/5'
             }`}
           >
             {t}
@@ -68,10 +65,10 @@ export default function NoteForm({ problemId }: { problemId: number }) {
                 key={opt.value}
                 type="button"
                 onClick={() => setConfidence(opt.value)}
-                className={`rounded-md border px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors ${
                   confidence === opt.value
                     ? 'border-accent bg-accent/15 text-accent'
-                    : 'border-border text-text-muted hover:border-accent hover:text-text'
+                    : 'border-white/10 text-text-muted hover:border-accent hover:text-text'
                 }`}
               >
                 {opt.label}
@@ -90,14 +87,10 @@ export default function NoteForm({ problemId }: { problemId: number }) {
             : "What's worth remembering next time?"
         }
         rows={4}
-        className="w-full resize-none rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
+        className="w-full resize-none rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
       />
       <div className="mt-3 flex justify-end">
-        <button
-          type="submit"
-          disabled={saving || !canSubmit}
-          className="rounded-md bg-accent px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
-        >
+        <button type="submit" disabled={saving || !canSubmit} className="btn-primary">
           {saving ? 'Saving...' : 'Add Note'}
         </button>
       </div>

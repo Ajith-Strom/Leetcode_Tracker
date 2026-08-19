@@ -19,7 +19,9 @@ export default function RevisionBoard({ problems }: { problems: DueProblem[] }) 
             aria-checked={blind}
             onClick={() => setBlind((b) => !b)}
             className={`relative h-5 w-9 rounded-full transition-colors ${
-              blind ? 'bg-accent' : 'border border-border bg-surface-hover'
+              blind
+                ? 'bg-accent shadow-[0_0_12px_rgba(99,102,241,0.5)]'
+                : 'border border-white/10 bg-white/5'
             }`}
           >
             <span

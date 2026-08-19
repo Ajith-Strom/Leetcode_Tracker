@@ -27,7 +27,7 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
   }
 
   return (
-    <div className="rounded-lg border border-border bg-surface p-4">
+    <div className="glass-panel glass-hover p-4">
       <div className="flex items-center justify-between gap-4">
         <a
           href={`https://leetcode.com/problems/${problem.leetcode_slug}/`}
@@ -42,7 +42,7 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
             <button
               type="button"
               onClick={() => setAttempting((a) => !a)}
-              className="rounded-md border border-border px-2.5 py-1 text-xs text-text-muted transition-colors hover:border-accent hover:text-text"
+              className="rounded-lg border border-white/10 px-2.5 py-1 text-xs text-text-muted transition-colors hover:border-accent hover:text-text"
             >
               Attempt
             </button>
@@ -50,7 +50,7 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
           <button
             type="button"
             onClick={() => setRevealed((r) => !r)}
-            className="rounded-md border border-border px-2.5 py-1 text-xs text-text-muted transition-colors hover:border-accent hover:text-text"
+            className="rounded-lg border border-white/10 px-2.5 py-1 text-xs text-text-muted transition-colors hover:border-accent hover:text-text"
           >
             {revealed ? 'Hide' : 'Reveal'}
           </button>
@@ -64,13 +64,13 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
             onChange={(e) => setApproach(e.target.value)}
             placeholder="Write your approach before revealing tags/difficulty..."
             rows={3}
-            className="w-full resize-none rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
+            className="w-full resize-none rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
           />
           <div className="mt-2 flex justify-end">
             <button
               type="submit"
               disabled={saving || !approach.trim()}
-              className="rounded-md bg-accent px-3 py-1 text-xs font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
+              className="btn-primary"
             >
               {saving ? 'Saving...' : 'Submit & Reveal'}
             </button>
@@ -79,7 +79,7 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
       )}
 
       {revealed && (
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-border pt-3">
+        <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-white/10 pt-3">
           <DifficultyBadge difficulty={problem.difficulty} />
           {problem.tags.map((tag) => (
             <TagPill key={tag} tag={tag} />

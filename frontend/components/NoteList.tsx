@@ -17,7 +17,7 @@ export default function NoteList({ notes }: { notes: Note[] }) {
       {notes.map((note) => (
         <li
           key={note.id}
-          className="rounded-lg border border-border bg-surface p-4"
+          className="glass-panel glass-hover p-4"
         >
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">

@@ -75,3 +75,16 @@ export interface StreakStats {
   currentStreak: number;
   longestStreak: number;
 }
+
+export interface ConfidenceStat {
+  confidence: number;
+  label: string;
+  count: number;
+}
+
+export interface DifficultyProgressionPoint {
+  month: string;
+  Easy: number;
+  Medium: number;
+  Hard: number;
+}

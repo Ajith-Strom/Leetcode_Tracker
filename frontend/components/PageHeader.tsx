@@ -10,7 +10,7 @@ export default function PageHeader({
   return (
     <div className="flex items-start justify-between gap-4 mb-6">
       <div>
-        <h1 className="text-lg font-semibold text-text">{title}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-text">{title}</h1>
         {description && (
           <p className="text-sm text-text-muted mt-1">{description}</p>
         )}

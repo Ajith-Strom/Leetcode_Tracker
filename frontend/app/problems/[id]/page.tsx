@@ -32,7 +32,7 @@ export default async function ProblemDetailPage({
             <TagPill key={tag} tag={tag} />
           ))}
         </div>
-        <h1 className="text-xl font-semibold text-text mb-1">{problem.title}</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-text mb-1">{problem.title}</h1>
         <div className="flex items-center gap-3 text-sm text-text-muted">
           <span>
             Solved {formatDate(problem.first_solved_date)}

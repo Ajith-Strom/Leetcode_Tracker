@@ -7,17 +7,17 @@ import { formatDate } from '@/lib/format';
 export default function RevisionList({ problems }: { problems: DueProblem[] }) {
   if (problems.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-border p-10 text-center">
+      <div className="glass-panel border-dashed p-10 text-center">
         <p className="text-sm text-text-muted">Nothing overdue. Nice.</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
+    <div className="glass-panel overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border bg-surface text-left text-xs text-text-muted">
+          <tr className="border-b border-white/10 bg-white/[0.03] text-left text-xs text-text-muted">
             <th className="px-4 py-2.5 font-medium">Title</th>
             <th className="px-4 py-2.5 font-medium">Difficulty</th>
             <th className="px-4 py-2.5 font-medium">Tags</th>
@@ -30,7 +30,7 @@ export default function RevisionList({ problems }: { problems: DueProblem[] }) {
           {problems.map((p) => (
             <tr
               key={p.id}
-              className="border-b border-border last:border-0 hover:bg-surface-hover"
+              className="border-b border-white/5 last:border-0 hover:bg-white/[0.03]"
             >
               <td className="px-4 py-2.5">
                 <Link
@@ -57,7 +57,7 @@ export default function RevisionList({ problems }: { problems: DueProblem[] }) {
                 every {p.interval_days}d
               </td>
               <td className="px-4 py-2.5">
-                <span className="inline-flex items-center rounded-full bg-hard/15 px-2 py-0.5 text-xs font-medium text-hard">
+                <span className="inline-flex items-center rounded-full border border-hard/25 bg-hard/10 backdrop-blur-sm px-2 py-0.5 text-xs font-medium text-hard">
                   {p.days_since}d
                 </span>
               </td>

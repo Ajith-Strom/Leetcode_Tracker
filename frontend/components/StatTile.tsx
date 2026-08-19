@@ -13,8 +13,8 @@ export default function StatTile({
 }) {
   const inner = (
     <div
-      className={`rounded-lg border border-border bg-surface px-4 py-3 h-full transition-colors ${
-        href ? 'hover:border-accent' : ''
+      className={`glass-panel px-4 py-3 h-full transition-all ${
+        href ? 'hover:border-accent/40 hover:shadow-[0_0_24px_rgba(99,102,241,0.2)]' : ''
       }`}
     >
       <p className="text-xs text-text-muted">{label}</p>

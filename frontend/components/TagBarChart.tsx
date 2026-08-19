@@ -7,12 +7,12 @@ export default function TagBarChart({ data }: { data: TagStat[] }) {
   return (
     <ResponsiveContainer width="100%" height={Math.max(320, data.length * 32)}>
       <BarChart data={data} layout="vertical" margin={{ top: 8, right: 24, left: 8, bottom: 8 }}>
-        <CartesianGrid horizontal={false} stroke="#232327" />
+        <CartesianGrid horizontal={false} stroke="rgba(255,255,255,0.08)" />
         <XAxis
           type="number"
           allowDecimals={false}
           tick={{ fill: '#8b8b93', fontSize: 12 }}
-          axisLine={{ stroke: '#232327' }}
+          axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
           tickLine={false}
         />
         <YAxis
@@ -20,15 +20,16 @@ export default function TagBarChart({ data }: { data: TagStat[] }) {
           dataKey="name"
           width={160}
           tick={{ fill: '#e4e4e7', fontSize: 12 }}
-          axisLine={{ stroke: '#232327' }}
+          axisLine={{ stroke: 'rgba(255,255,255,0.08)' }}
           tickLine={false}
         />
         <Tooltip
-          cursor={{ fill: '#1a1a1e' }}
+          cursor={{ fill: 'rgba(255,255,255,0.04)' }}
           contentStyle={{
-            background: '#131316',
-            border: '1px solid #232327',
-            borderRadius: 8,
+            background: 'rgba(19,19,22,0.7)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: 10,
             fontSize: 12,
             color: '#e4e4e7',
           }}

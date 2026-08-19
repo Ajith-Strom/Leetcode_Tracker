@@ -21,7 +21,7 @@ export default function ExportPlaybookButton({ topics }: { topics: PlaybookTopic
     <button
       onClick={handleExport}
       disabled={topics.length === 0}
-      className="inline-flex items-center gap-2 rounded-md bg-accent px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed"
+      className="btn-primary disabled:cursor-not-allowed"
     >
       Export to Markdown
     </button>

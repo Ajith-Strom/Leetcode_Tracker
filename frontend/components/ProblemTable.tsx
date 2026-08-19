@@ -7,7 +7,7 @@ import { formatDate } from '@/lib/format';
 export default function ProblemTable({ problems }: { problems: Problem[] }) {
   if (problems.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-border p-10 text-center">
+      <div className="glass-panel border-dashed p-10 text-center">
         <p className="text-sm text-text-muted">
           No problems synced yet. Click Sync to pull from LeetCode.
         </p>
@@ -16,10 +16,10 @@ export default function ProblemTable({ problems }: { problems: Problem[] }) {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-border">
+    <div className="glass-panel overflow-hidden">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-border bg-surface text-left text-xs text-text-muted">
+          <tr className="border-b border-white/10 bg-white/[0.03] text-left text-xs text-text-muted">
             <th className="px-4 py-2.5 font-medium">Title</th>
             <th className="px-4 py-2.5 font-medium">Difficulty</th>
             <th className="px-4 py-2.5 font-medium">Tags</th>
@@ -30,7 +30,7 @@ export default function ProblemTable({ problems }: { problems: Problem[] }) {
           {problems.map((p) => (
             <tr
               key={p.id}
-              className="border-b border-border last:border-0 hover:bg-surface-hover"
+              className="border-b border-white/5 last:border-0 hover:bg-white/[0.03]"
             >
               <td className="px-4 py-2.5">
                 <Link

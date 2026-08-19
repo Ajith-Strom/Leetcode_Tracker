@@ -8,6 +8,8 @@ import {
   Pattern,
   PlaybookTopic,
   StreakStats,
+  ConfidenceStat,
+  DifficultyProgressionPoint,
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
@@ -103,4 +105,12 @@ export function getPlaybook(): Promise<PlaybookTopic[]> {
 
 export function getStreakStats(days = 365): Promise<StreakStats> {
   return apiFetch<StreakStats>(`/api/stats/streak?days=${days}`);
+}
+
+export function getConfidenceStats(): Promise<ConfidenceStat[]> {
+  return apiFetch<ConfidenceStat[]>('/api/stats/confidence');
+}
+
+export function getDifficultyProgression(): Promise<DifficultyProgressionPoint[]> {
+  return apiFetch<DifficultyProgressionPoint[]>('/api/stats/difficulty-progression');
 }

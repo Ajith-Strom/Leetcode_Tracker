@@ -51,7 +51,7 @@ export default function PatternManager({
         {patterns.map((p) => (
           <span
             key={p.id}
-            className="inline-flex items-center gap-1 rounded-full bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent"
+            className="inline-flex items-center gap-1 rounded-full border border-accent/25 bg-accent/10 backdrop-blur-sm px-2 py-0.5 text-xs font-medium text-accent"
           >
             {p.name}
             <button
@@ -72,18 +72,14 @@ export default function PatternManager({
           onChange={(e) => setName(e.target.value)}
           placeholder="e.g. Fast & Slow Pointers"
           list="pattern-suggestions"
-          className="flex-1 rounded-md border border-border bg-bg px-3 py-1.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
+          className="flex-1 rounded-lg border border-white/10 bg-black/20 px-3 py-1.5 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
         />
         <datalist id="pattern-suggestions">
           {suggestions.map((s) => (
             <option key={s.id} value={s.name} />
           ))}
         </datalist>
-        <button
-          type="submit"
-          disabled={saving || !name.trim()}
-          className="rounded-md border border-border bg-surface-hover px-3 py-1.5 text-sm text-text transition-colors hover:border-accent disabled:opacity-50"
-        >
+        <button type="submit" disabled={saving || !name.trim()} className="btn-secondary">
           {saving ? 'Adding...' : 'Add'}
         </button>
       </form>

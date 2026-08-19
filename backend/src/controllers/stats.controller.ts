@@ -21,3 +21,44 @@ export async function getStreakStats(req: Request, res: Response) {
   const { currentStreak, longestStreak } = computeStreaks(solvedDates);
   res.json({ activity, currentStreak, longestStreak });
 }
+
+const CONFIDENCE_LABELS: Record<number, string> = {
+  1: 'Struggled',
+  2: 'Satisfactory',
+  3: 'Mastered',
+};
+
+export async function getConfidenceStats(_req: Request, res: Response) {
+  const [rows] = await pool.query<RowDataPacket[]>(
+    `SELECT confidence_score, COUNT(*) AS count
+     FROM notes
+     WHERE type = 'review' AND confidence_score IS NOT NULL
+     GROUP BY confidence_score
+     ORDER BY confidence_score`
+  );
+  res.json(
+    rows.map((r) => ({
+      confidence: r.confidence_score,
+      label: CONFIDENCE_LABELS[r.confidence_score],
+      count: r.count,
+    }))
+  );
+}
+
+export async function getDifficultyProgression(_req: Request, res: Response) {
+  const [rows] = await pool.query<RowDataPacket[]>(
+    `SELECT DATE_FORMAT(first_solved_date, '%Y-%m') AS month, difficulty, COUNT(*) AS count
+     FROM problems
+     GROUP BY month, difficulty`
+  );
+
+  const months = [...new Set(rows.map((r) => r.month as string))].sort();
+  const byMonth = new Map<string, { Easy: number; Medium: number; Hard: number }>(
+    months.map((m) => [m, { Easy: 0, Medium: 0, Hard: 0 }])
+  );
+  for (const r of rows) {
+    byMonth.get(r.month)![r.difficulty as 'Easy' | 'Medium' | 'Hard'] = r.count;
+  }
+
+  res.json(months.map((month) => ({ month, ...byMonth.get(month)! })));
+}

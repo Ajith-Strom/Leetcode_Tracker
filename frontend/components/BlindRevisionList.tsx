@@ -4,7 +4,7 @@ import BlindRevisionRow from '@/components/BlindRevisionRow';
 export default function BlindRevisionList({ problems }: { problems: DueProblem[] }) {
   if (problems.length === 0) {
     return (
-      <div className="rounded-lg border border-dashed border-border p-10 text-center">
+      <div className="glass-panel border-dashed p-10 text-center">
         <p className="text-sm text-text-muted">Nothing overdue. Nice.</p>
       </div>
     );

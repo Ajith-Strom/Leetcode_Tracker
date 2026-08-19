@@ -23,7 +23,7 @@ export default async function PlaybookPage() {
       />
 
       {topics.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border p-10 text-center">
+        <div className="glass-panel border-dashed p-10 text-center">
           <p className="text-sm text-text-muted">
             No review notes yet. Add a review note on a problem to start building your
             playbook.
@@ -38,7 +38,7 @@ export default async function PlaybookPage() {
                 {problems.map((problem) => (
                   <div
                     key={problem.id}
-                    className="rounded-lg border border-border bg-surface p-4"
+                    className="glass-panel glass-hover p-4"
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <Link
