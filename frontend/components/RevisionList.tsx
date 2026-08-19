@@ -22,6 +22,7 @@ export default function RevisionList({ problems }: { problems: DueProblem[] }) {
             <th className="px-4 py-2.5 font-medium">Difficulty</th>
             <th className="px-4 py-2.5 font-medium">Tags</th>
             <th className="px-4 py-2.5 font-medium">Last Revised</th>
+            <th className="px-4 py-2.5 font-medium">Interval</th>
             <th className="px-4 py-2.5 font-medium">Days Overdue</th>
           </tr>
         </thead>
@@ -51,6 +52,9 @@ export default function RevisionList({ problems }: { problems: DueProblem[] }) {
               </td>
               <td className="px-4 py-2.5 text-text-muted whitespace-nowrap">
                 {formatDate(p.last_revised)}
+              </td>
+              <td className="px-4 py-2.5 text-text-muted whitespace-nowrap">
+                every {p.interval_days}d
               </td>
               <td className="px-4 py-2.5">
                 <span className="inline-flex items-center rounded-full bg-hard/15 px-2 py-0.5 text-xs font-medium text-hard">

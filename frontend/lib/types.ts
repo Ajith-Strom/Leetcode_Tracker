@@ -15,6 +15,7 @@ export interface Note {
   problem_id: number;
   type: NoteType;
   confidence_score: number | null;
+  interval_days: number | null;
   content: string;
   created_at: string;
 }
@@ -31,6 +32,7 @@ export interface DueProblem {
   difficulty: Difficulty;
   tags: string[];
   last_revised: string;
+  interval_days: number;
   days_since: number;
 }
 

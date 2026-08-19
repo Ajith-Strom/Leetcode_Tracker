@@ -57,11 +57,14 @@ export function createNote(
   type: NoteType,
   content: string,
   confidenceScore?: number
-): Promise<{ id: number }> {
-  return apiFetch<{ id: number }>(`/api/problems/${problemId}/notes`, {
-    method: 'POST',
-    body: JSON.stringify({ type, content, confidence_score: confidenceScore }),
-  });
+): Promise<{ id: number; intervalDays: number | null }> {
+  return apiFetch<{ id: number; intervalDays: number | null }>(
+    `/api/problems/${problemId}/notes`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ type, content, confidence_score: confidenceScore }),
+    }
+  );
 }
 
 export function runSync(): Promise<{ newProblems: number; totalFetched: number }> {

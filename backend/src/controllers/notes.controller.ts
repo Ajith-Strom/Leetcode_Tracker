@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-import { createNote, getNotesForProblem } from '../services/notes.repo';
+import { createNote, getNotesForProblem, getLatestReviewIntervalDays } from '../services/notes.repo';
+import { computeNextIntervalDays, getRevisionIntervalDays } from '../services/revision.service';
 import { NoteType } from '../types';
 
 export async function listNotes(req: Request, res: Response) {
@@ -25,11 +26,24 @@ export async function postNote(req: Request, res: Response) {
     return;
   }
 
+  if (confidence_score !== undefined && ![1, 2, 3].includes(confidence_score)) {
+    res.status(400).json({ error: 'confidence_score must be 1, 2, or 3' });
+    return;
+  }
+
+  let intervalDays: number | null = null;
+  if (type === 'review' && confidence_score) {
+    const previousIntervalDays =
+      (await getLatestReviewIntervalDays(problemId)) ?? (await getRevisionIntervalDays());
+    intervalDays = computeNextIntervalDays(confidence_score, previousIntervalDays);
+  }
+
   const id = await createNote({
     problemId,
     type,
     content,
     confidenceScore: confidence_score ?? null,
+    intervalDays,
   });
-  res.status(201).json({ id });
+  res.status(201).json({ id, intervalDays });
 }

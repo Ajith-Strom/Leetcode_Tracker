@@ -23,7 +23,7 @@ export default function RevisionIntervalForm({ currentDays }: { currentDays: num
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">
       <label className="text-sm text-text-muted" htmlFor="interval">
-        Overdue after
+        Default interval (unreviewed)
       </label>
       <input
         id="interval"

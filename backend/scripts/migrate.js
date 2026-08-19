@@ -25,7 +25,7 @@ async function main() {
     try {
       await connection.query(sql);
     } catch (err) {
-      if (err.code === 'ER_TABLE_EXISTS_ERROR') {
+      if (err.code === 'ER_TABLE_EXISTS_ERROR' || err.code === 'ER_DUP_FIELDNAME') {
         console.log(`  skipped (already applied)`);
       } else {
         throw err;

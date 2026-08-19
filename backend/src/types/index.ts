@@ -26,6 +26,7 @@ export interface Note {
   problem_id: number;
   type: NoteType;
   confidence_score: number | null;
+  interval_days: number | null;
   content: string;
   created_at: string;
 }

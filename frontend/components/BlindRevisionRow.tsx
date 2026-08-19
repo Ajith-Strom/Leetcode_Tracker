@@ -85,7 +85,7 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
             <TagPill key={tag} tag={tag} />
           ))}
           <span className="ml-auto text-xs text-text-muted">
-            {problem.days_since}d overdue ·{' '}
+            {problem.days_since}d overdue (every {problem.interval_days}d) ·{' '}
             <Link href={`/problems/${problem.id}`} className="text-accent hover:text-accent-hover">
               Full history
             </Link>
