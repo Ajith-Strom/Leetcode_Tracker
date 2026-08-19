@@ -45,3 +45,22 @@ export interface DueProblem {
 export interface Settings {
   revision_interval_days: number;
 }
+
+export interface PlaybookNote {
+  content: string;
+  confidence_score: number | null;
+  created_at: string;
+}
+
+export interface PlaybookProblem {
+  id: number;
+  title: string;
+  leetcode_slug: string;
+  difficulty: Difficulty;
+  notes: PlaybookNote[];
+}
+
+export interface PlaybookTopic {
+  topic: string;
+  problems: PlaybookProblem[];
+}

@@ -7,6 +7,7 @@ import { revisionRouter } from './routes/revision.routes';
 import { settingsRouter } from './routes/settings.routes';
 import { notesRouter } from './routes/notes.routes';
 import { patternsRouter } from './routes/patterns.routes';
+import { playbookRouter } from './routes/playbook.routes';
 
 export const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api', revisionRouter);
 app.use('/api', settingsRouter);
 app.use('/api', notesRouter);
 app.use('/api', patternsRouter);
+app.use('/api', playbookRouter);
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true });

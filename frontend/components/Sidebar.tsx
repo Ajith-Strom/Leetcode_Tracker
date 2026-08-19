@@ -7,6 +7,7 @@ const links = [
   { href: '/', label: 'Problems' },
   { href: '/stats', label: 'Weak Areas' },
   { href: '/revision', label: 'Revision' },
+  { href: '/playbook', label: 'Playbook' },
 ];
 
 export default function Sidebar() {

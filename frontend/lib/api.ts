@@ -6,6 +6,7 @@ import {
   Settings,
   NoteType,
   Pattern,
+  PlaybookTopic,
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
@@ -93,4 +94,8 @@ export async function removePattern(problemId: number, patternId: number): Promi
   if (!res.ok) {
     throw new Error(`Failed to remove pattern (${res.status})`);
   }
+}
+
+export function getPlaybook(): Promise<PlaybookTopic[]> {
+  return apiFetch<PlaybookTopic[]>('/api/playbook');
 }
