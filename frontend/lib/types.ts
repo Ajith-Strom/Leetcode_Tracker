@@ -1,6 +1,11 @@
 export type Difficulty = 'Easy' | 'Medium' | 'Hard';
 export type NoteType = 'approach' | 'review';
 
+export interface Pattern {
+  id: number;
+  name: string;
+}
+
 export interface Problem {
   id: number;
   title: string;
@@ -8,6 +13,7 @@ export interface Problem {
   difficulty: Difficulty;
   first_solved_date: string;
   tags: string[];
+  patterns?: Pattern[];
 }
 
 export interface Note {

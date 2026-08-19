@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getAllProblems, getProblemById } from '../services/problems.repo';
+import { getPatternsForProblem } from '../services/patterns.repo';
 
 export async function listProblems(_req: Request, res: Response) {
   const problems = await getAllProblems();
@@ -17,5 +18,6 @@ export async function getProblem(req: Request, res: Response) {
     res.status(404).json({ error: 'Problem not found' });
     return;
   }
-  res.json(problem);
+  const patterns = await getPatternsForProblem(id);
+  res.json({ ...problem, patterns });
 }

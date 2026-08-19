@@ -6,6 +6,7 @@ import { statsRouter } from './routes/stats.routes';
 import { revisionRouter } from './routes/revision.routes';
 import { settingsRouter } from './routes/settings.routes';
 import { notesRouter } from './routes/notes.routes';
+import { patternsRouter } from './routes/patterns.routes';
 
 export const app = express();
 
@@ -18,6 +19,7 @@ app.use('/api', statsRouter);
 app.use('/api', revisionRouter);
 app.use('/api', settingsRouter);
 app.use('/api', notesRouter);
+app.use('/api', patternsRouter);
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true });

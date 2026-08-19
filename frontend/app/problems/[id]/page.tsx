@@ -1,9 +1,10 @@
 import Link from 'next/link';
-import { getProblem, getNotes } from '@/lib/api';
+import { getProblem, getNotes, getAllPatterns } from '@/lib/api';
 import NoteForm from '@/components/NoteForm';
 import NoteList from '@/components/NoteList';
 import DifficultyBadge from '@/components/DifficultyBadge';
 import TagPill from '@/components/TagPill';
+import PatternManager from '@/components/PatternManager';
 import { formatDate } from '@/lib/format';
 
 export default async function ProblemDetailPage({
@@ -12,9 +13,10 @@ export default async function ProblemDetailPage({
   const { id } = await params;
   const problemId = Number(id);
 
-  const [problem, notes] = await Promise.all([
+  const [problem, notes, allPatterns] = await Promise.all([
     getProblem(problemId),
     getNotes(problemId),
+    getAllPatterns(),
   ]);
 
   return (
@@ -45,6 +47,15 @@ export default async function ProblemDetailPage({
             View on LeetCode ↗
           </a>
         </div>
+      </div>
+
+      <h2 className="text-sm font-semibold text-text mb-3">Patterns</h2>
+      <div className="mb-8">
+        <PatternManager
+          problemId={problemId}
+          patterns={problem.patterns ?? []}
+          suggestions={allPatterns}
+        />
       </div>
 
       <h2 className="text-sm font-semibold text-text mb-3">Notes</h2>

@@ -5,6 +5,7 @@ import {
   DueProblem,
   Settings,
   NoteType,
+  Pattern,
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
@@ -71,4 +72,25 @@ export function runSync(): Promise<{ newProblems: number; totalFetched: number }
   return apiFetch<{ newProblems: number; totalFetched: number }>('/api/sync', {
     method: 'POST',
   });
+}
+
+export function getAllPatterns(): Promise<Pattern[]> {
+  return apiFetch<Pattern[]>('/api/patterns');
+}
+
+export function addPattern(problemId: number, name: string): Promise<Pattern> {
+  return apiFetch<Pattern>(`/api/problems/${problemId}/patterns`, {
+    method: 'POST',
+    body: JSON.stringify({ name }),
+  });
+}
+
+export async function removePattern(problemId: number, patternId: number): Promise<void> {
+  const res = await fetch(
+    `${API_BASE_URL}/api/problems/${problemId}/patterns/${patternId}`,
+    { method: 'DELETE' }
+  );
+  if (!res.ok) {
+    throw new Error(`Failed to remove pattern (${res.status})`);
+  }
 }

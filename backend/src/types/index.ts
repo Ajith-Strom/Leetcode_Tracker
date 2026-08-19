@@ -19,6 +19,7 @@ export interface Problem {
   difficulty: Difficulty;
   first_solved_date: string;
   tags: string[];
+  patterns?: { id: number; name: string }[];
 }
 
 export interface Note {
