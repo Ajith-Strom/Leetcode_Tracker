@@ -19,7 +19,9 @@ export async function createNote(params: {
 
 export async function getNotesForProblem(problemId: number): Promise<Note[]> {
   const [rows] = await pool.query<RowDataPacket[]>(
-    'SELECT * FROM notes WHERE problem_id = ? ORDER BY created_at DESC',
+    // id as a tiebreaker: created_at is second-precision, so notes added within
+    // the same second would otherwise sort in an arbitrary order.
+    'SELECT * FROM notes WHERE problem_id = ? ORDER BY created_at DESC, id DESC',
     [problemId]
   );
   return rows as Note[];
@@ -29,7 +31,7 @@ export async function getLatestReviewIntervalDays(problemId: number): Promise<nu
   const [rows] = await pool.query<RowDataPacket[]>(
     `SELECT interval_days FROM notes
      WHERE problem_id = ? AND type = 'review'
-     ORDER BY created_at DESC LIMIT 1`,
+     ORDER BY created_at DESC, id DESC LIMIT 1`,
     [problemId]
   );
   return rows.length > 0 ? (rows[0].interval_days as number | null) : null;

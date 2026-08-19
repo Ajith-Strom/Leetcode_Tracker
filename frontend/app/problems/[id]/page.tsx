@@ -21,7 +21,7 @@ export default async function ProblemDetailPage({
 
   return (
     <main className="mx-auto max-w-3xl px-8 py-10">
-      <Link href="/" className="text-sm text-text-muted hover:text-text">
+      <Link href="/problems" className="text-sm text-text-muted hover:text-text">
         ← Problems
       </Link>
 

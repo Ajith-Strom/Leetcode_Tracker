@@ -64,3 +64,14 @@ export interface PlaybookTopic {
   topic: string;
   problems: PlaybookProblem[];
 }
+
+export interface DayActivity {
+  date: string;
+  count: number;
+}
+
+export interface StreakStats {
+  activity: DayActivity[];
+  currentStreak: number;
+  longestStreak: number;
+}

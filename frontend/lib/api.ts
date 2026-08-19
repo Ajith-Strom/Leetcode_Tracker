@@ -7,6 +7,7 @@ import {
   NoteType,
   Pattern,
   PlaybookTopic,
+  StreakStats,
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
@@ -98,4 +99,8 @@ export async function removePattern(problemId: number, patternId: number): Promi
 
 export function getPlaybook(): Promise<PlaybookTopic[]> {
   return apiFetch<PlaybookTopic[]>('/api/playbook');
+}
+
+export function getStreakStats(days = 365): Promise<StreakStats> {
+  return apiFetch<StreakStats>(`/api/stats/streak?days=${days}`);
 }

@@ -58,7 +58,7 @@ export async function getDueProblems(): Promise<DueProblem[]> {
      LEFT JOIN notes n ON n.id = (
        SELECT n2.id FROM notes n2
        WHERE n2.problem_id = p.id AND n2.type = 'review'
-       ORDER BY n2.created_at DESC LIMIT 1
+       ORDER BY n2.created_at DESC, n2.id DESC LIMIT 1
      )
      LEFT JOIN problems_tags pt ON pt.problem_id = p.id
      LEFT JOIN tags t ON t.id = pt.tag_id
