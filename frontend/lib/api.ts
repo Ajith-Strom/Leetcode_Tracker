@@ -1,0 +1,71 @@
+import {
+  Problem,
+  Note,
+  TagStat,
+  DueProblem,
+  Settings,
+  NoteType,
+} from './types';
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
+
+async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    ...init,
+    cache: 'no-store',
+    headers: { 'Content-Type': 'application/json', ...init?.headers },
+  });
+  if (!res.ok) {
+    throw new Error(`API request failed: ${path} (${res.status})`);
+  }
+  return res.json() as Promise<T>;
+}
+
+export function getProblems(): Promise<Problem[]> {
+  return apiFetch<Problem[]>('/api/problems');
+}
+
+export function getProblem(id: number): Promise<Problem> {
+  return apiFetch<Problem>(`/api/problems/${id}`);
+}
+
+export function getTagStats(): Promise<TagStat[]> {
+  return apiFetch<TagStat[]>('/api/stats/tags');
+}
+
+export function getDueProblems(): Promise<DueProblem[]> {
+  return apiFetch<DueProblem[]>('/api/revision/due');
+}
+
+export function getSettings(): Promise<Settings> {
+  return apiFetch<Settings>('/api/settings');
+}
+
+export function updateSettings(revisionIntervalDays: number): Promise<Settings> {
+  return apiFetch<Settings>('/api/settings', {
+    method: 'PUT',
+    body: JSON.stringify({ revision_interval_days: revisionIntervalDays }),
+  });
+}
+
+export function getNotes(problemId: number): Promise<Note[]> {
+  return apiFetch<Note[]>(`/api/problems/${problemId}/notes`);
+}
+
+export function createNote(
+  problemId: number,
+  type: NoteType,
+  content: string,
+  confidenceScore?: number
+): Promise<{ id: number }> {
+  return apiFetch<{ id: number }>(`/api/problems/${problemId}/notes`, {
+    method: 'POST',
+    body: JSON.stringify({ type, content, confidence_score: confidenceScore }),
+  });
+}
+
+export function runSync(): Promise<{ newProblems: number; totalFetched: number }> {
+  return apiFetch<{ newProblems: number; totalFetched: number }>('/api/sync', {
+    method: 'POST',
+  });
+}
