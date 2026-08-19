@@ -10,6 +10,8 @@ export interface AcSubmission {
 export interface QuestionData {
   difficulty: Difficulty;
   topicTags: { name: string; slug: string }[];
+  content: string | null;
+  isPaidOnly: boolean;
 }
 
 export interface Problem {
@@ -20,6 +22,8 @@ export interface Problem {
   first_solved_date: string;
   tags: string[];
   patterns?: { id: number; name: string }[];
+  content?: string | null;
+  is_paid_only?: boolean;
 }
 
 export interface Note {

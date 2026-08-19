@@ -1,5 +1,5 @@
 import { DayActivity } from '@/lib/types';
-import { groupActivityIntoWeeks, getIntensityLevel } from '@/lib/heatmap';
+import { groupActivityIntoWeeks, getIntensityLevel, getMonthLabels } from '@/lib/heatmap';
 import { formatDate } from '@/lib/format';
 
 const INTENSITY_CLASSES: Record<0 | 1 | 2 | 3 | 4, string> = {
@@ -12,10 +12,22 @@ const INTENSITY_CLASSES: Record<0 | 1 | 2 | 3 | 4, string> = {
 
 export default function ActivityHeatmap({ activity }: { activity: DayActivity[] }) {
   const weeks = groupActivityIntoWeeks(activity);
+  const monthLabels = getMonthLabels(weeks);
   const maxCount = Math.max(...activity.map((d) => d.count), 1);
 
   return (
     <div className="overflow-x-auto">
+      <div className="flex gap-1 h-3 mb-1.5">
+        {monthLabels.map((label, weekIdx) => (
+          <div key={weekIdx} className="relative w-3 h-3 shrink-0">
+            {label && (
+              <span className="absolute top-0 left-0 leading-3 whitespace-nowrap text-[9px] font-medium tracking-tight text-text-muted">
+                {label}
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
       <div className="flex gap-1">
         {weeks.map((week, weekIdx) => (
           <div key={weekIdx} className="flex flex-col gap-1">

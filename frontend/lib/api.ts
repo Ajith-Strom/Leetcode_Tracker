@@ -10,6 +10,7 @@ import {
   StreakStats,
   ConfidenceStat,
   DifficultyProgressionPoint,
+  ScheduledProblem,
 } from './types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:4000';
@@ -40,6 +41,10 @@ export function getTagStats(): Promise<TagStat[]> {
 
 export function getDueProblems(): Promise<DueProblem[]> {
   return apiFetch<DueProblem[]>('/api/revision/due');
+}
+
+export function getRevisionSchedule(): Promise<ScheduledProblem[]> {
+  return apiFetch<ScheduledProblem[]>('/api/revision/schedule');
 }
 
 export function getSettings(): Promise<Settings> {
@@ -113,4 +118,26 @@ export function getConfidenceStats(): Promise<ConfidenceStat[]> {
 
 export function getDifficultyProgression(): Promise<DifficultyProgressionPoint[]> {
   return apiFetch<DifficultyProgressionPoint[]>('/api/stats/difficulty-progression');
+}
+
+export function rescheduleProblem(
+  problemId: number,
+  date: string
+): Promise<{ id: number; override_due_date: string }> {
+  return apiFetch<{ id: number; override_due_date: string }>(
+    `/api/problems/${problemId}/reschedule`,
+    {
+      method: 'PUT',
+      body: JSON.stringify({ date }),
+    }
+  );
+}
+
+export async function clearReschedule(problemId: number): Promise<void> {
+  const res = await fetch(`${API_BASE_URL}/api/problems/${problemId}/reschedule`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to clear reschedule (${res.status})`);
+  }
 }

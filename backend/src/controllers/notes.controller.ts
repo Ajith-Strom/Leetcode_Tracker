@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { createNote, getNotesForProblem, getLatestReviewIntervalDays } from '../services/notes.repo';
 import { computeNextIntervalDays, getRevisionIntervalDays } from '../services/revision.service';
+import { clearOverrideDueDate } from '../services/problems.repo';
 import { NoteType } from '../types';
 
 export async function listNotes(req: Request, res: Response) {
@@ -26,8 +27,8 @@ export async function postNote(req: Request, res: Response) {
     return;
   }
 
-  if (confidence_score !== undefined && ![1, 2, 3].includes(confidence_score)) {
-    res.status(400).json({ error: 'confidence_score must be 1, 2, or 3' });
+  if (confidence_score !== undefined && ![1, 2, 3, 4].includes(confidence_score)) {
+    res.status(400).json({ error: 'confidence_score must be 1, 2, 3, or 4' });
     return;
   }
 
@@ -36,6 +37,9 @@ export async function postNote(req: Request, res: Response) {
     const previousIntervalDays =
       (await getLatestReviewIntervalDays(problemId)) ?? (await getRevisionIntervalDays());
     intervalDays = computeNextIntervalDays(confidence_score, previousIntervalDays);
+    // A real review just happened -- let the algorithm resume control over
+    // this problem's schedule, clearing any manual reschedule.
+    await clearOverrideDueDate(problemId);
   }
 
   const id = await createNote({

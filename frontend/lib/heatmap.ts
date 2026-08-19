@@ -27,6 +27,24 @@ export function groupActivityIntoWeeks(activity: DayActivity[]): (DayActivity | 
   return weeks;
 }
 
+// Returns one label per week column (empty string if no label): the short
+// month name, placed on the first week whose first real day falls in a new
+// month, mirroring how GitHub's contribution graph labels months.
+export function getMonthLabels(weeks: (DayActivity | null)[][]): string[] {
+  let lastMonth = -1;
+  return weeks.map((week) => {
+    const firstDay = week.find((d): d is DayActivity => d !== null);
+    if (!firstDay) return '';
+
+    const date = new Date(firstDay.date + 'T00:00:00Z');
+    const month = date.getUTCMonth();
+    if (month === lastMonth) return '';
+
+    lastMonth = month;
+    return date.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+  });
+}
+
 // Maps a day's solve count to a 0-4 intensity bucket relative to the
 // busiest day in the visible range, for a 5-shade color scale.
 export function getIntensityLevel(count: number, maxCount: number): 0 | 1 | 2 | 3 | 4 {

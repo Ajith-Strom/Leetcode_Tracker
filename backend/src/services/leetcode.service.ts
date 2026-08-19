@@ -52,6 +52,8 @@ export async function fetchQuestionData(titleSlug: string): Promise<QuestionData
       question(titleSlug: $titleSlug) {
         difficulty
         topicTags { name slug }
+        content
+        isPaidOnly
       }
     }
   `;

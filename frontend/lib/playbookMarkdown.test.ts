@@ -14,7 +14,7 @@ const sample: PlaybookTopic[] = [
         notes: [
           {
             content: 'Sort, fix one, two pointers for the rest.',
-            confidence_score: 2,
+            confidence_score: 3,
             created_at: '2026-08-15T00:00:00.000Z',
           },
         ],

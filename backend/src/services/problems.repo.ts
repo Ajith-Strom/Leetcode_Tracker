@@ -2,6 +2,14 @@ import { RowDataPacket } from 'mysql2';
 import { pool } from '../db/pool';
 import { Difficulty, Problem } from '../types';
 
+export async function setOverrideDueDate(problemId: number, date: string): Promise<void> {
+  await pool.query('UPDATE problems SET override_due_date = ? WHERE id = ?', [date, problemId]);
+}
+
+export async function clearOverrideDueDate(problemId: number): Promise<void> {
+  await pool.query('UPDATE problems SET override_due_date = NULL WHERE id = ?', [problemId]);
+}
+
 export async function getAllSlugs(): Promise<Set<string>> {
   const [rows] = await pool.query<RowDataPacket[]>('SELECT leetcode_slug FROM problems');
   return new Set(rows.map((r) => r.leetcode_slug as string));
@@ -12,13 +20,16 @@ export async function upsertProblem(params: {
   slug: string;
   difficulty: Difficulty;
   firstSolvedDate: string; // YYYY-MM-DD
+  content?: string | null;
+  isPaidOnly?: boolean;
 }): Promise<number> {
-  const { title, slug, difficulty, firstSolvedDate } = params;
+  const { title, slug, difficulty, firstSolvedDate, content, isPaidOnly } = params;
   await pool.query(
-    `INSERT INTO problems (title, leetcode_slug, difficulty, first_solved_date)
-     VALUES (?, ?, ?, ?)
-     ON DUPLICATE KEY UPDATE title = VALUES(title), difficulty = VALUES(difficulty)`,
-    [title, slug, difficulty, firstSolvedDate]
+    `INSERT INTO problems (title, leetcode_slug, difficulty, first_solved_date, content, is_paid_only)
+     VALUES (?, ?, ?, ?, ?, ?)
+     ON DUPLICATE KEY UPDATE title = VALUES(title), difficulty = VALUES(difficulty),
+       content = VALUES(content), is_paid_only = VALUES(is_paid_only)`,
+    [title, slug, difficulty, firstSolvedDate, content ?? null, isPaidOnly ?? false]
   );
   const [rows] = await pool.query<RowDataPacket[]>(
     'SELECT id FROM problems WHERE leetcode_slug = ?',
@@ -63,6 +74,7 @@ export async function getAllProblems(): Promise<Problem[]> {
 export async function getProblemById(id: number): Promise<Problem | null> {
   const [rows] = await pool.query<RowDataPacket[]>(
     `SELECT p.id, p.title, p.leetcode_slug, p.difficulty, p.first_solved_date,
+            p.content, p.is_paid_only,
             GROUP_CONCAT(t.name) AS tag_names
      FROM problems p
      LEFT JOIN problems_tags pt ON pt.problem_id = p.id
@@ -80,5 +92,7 @@ export async function getProblemById(id: number): Promise<Problem | null> {
     difficulty: r.difficulty,
     first_solved_date: r.first_solved_date,
     tags: r.tag_names ? (r.tag_names as string).split(',') : [],
+    content: r.content,
+    is_paid_only: Boolean(r.is_paid_only),
   };
 }

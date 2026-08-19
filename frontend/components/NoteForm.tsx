@@ -5,21 +5,29 @@ import { useRouter } from 'next/navigation';
 import { createNote } from '@/lib/api';
 import { NoteType } from '@/lib/types';
 
-const CONFIDENCE_OPTIONS: { value: 1 | 2 | 3; label: string }[] = [
+const CONFIDENCE_OPTIONS: { value: 1 | 2 | 3 | 4; label: string }[] = [
   { value: 1, label: 'Struggled' },
-  { value: 2, label: 'Satisfactory' },
-  { value: 3, label: 'Mastered' },
+  { value: 2, label: 'Shaky' },
+  { value: 3, label: 'Satisfactory' },
+  { value: 4, label: 'Mastered' },
 ];
 
 export default function NoteForm({ problemId }: { problemId: number }) {
   const router = useRouter();
   const [type, setType] = useState<NoteType>('approach');
   const [content, setContent] = useState('');
-  const [confidence, setConfidence] = useState<1 | 2 | 3 | null>(null);
+  const [confidence, setConfidence] = useState<1 | 2 | 3 | 4 | null>(null);
   const [saving, setSaving] = useState(false);
 
   const needsConfidence = type === 'review';
   const canSubmit = content.trim() && (!needsConfidence || confidence !== null);
+
+  function handleTypeChange(newType: NoteType) {
+    if (newType === type) return;
+    setType(newType);
+    setContent('');
+    setConfidence(null);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -42,7 +50,7 @@ export default function NoteForm({ problemId }: { problemId: number }) {
           <button
             key={t}
             type="button"
-            onClick={() => setType(t)}
+            onClick={() => handleTypeChange(t)}
             className={`rounded-lg px-3 py-1 text-xs font-medium capitalize transition-colors ${
               type === t
                 ? 'bg-accent/15 text-accent'

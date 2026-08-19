@@ -14,6 +14,8 @@ export interface Problem {
   first_solved_date: string;
   tags: string[];
   patterns?: Pattern[];
+  content?: string | null;
+  is_paid_only?: boolean;
 }
 
 export interface Note {
@@ -39,7 +41,24 @@ export interface DueProblem {
   tags: string[];
   last_revised: string;
   interval_days: number;
+  next_due_date: string;
   days_since: number;
+  is_overridden: boolean;
+  content: string | null;
+  is_paid_only: boolean;
+}
+
+export interface ScheduledProblem {
+  id: number;
+  title: string;
+  leetcode_slug: string;
+  difficulty: Difficulty;
+  tags: string[];
+  last_revised: string;
+  interval_days: number;
+  next_due_date: string;
+  days_until_due: number;
+  is_overridden: boolean;
 }
 
 export interface Settings {

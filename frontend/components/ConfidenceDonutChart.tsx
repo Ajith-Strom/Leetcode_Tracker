@@ -4,9 +4,10 @@ import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, Legend } from 'recha
 import { ConfidenceStat } from '@/lib/types';
 
 const COLORS: Record<number, string> = {
-  1: '#ef4444', // Struggled -> hard/red
-  2: '#eab308', // Satisfactory -> medium/yellow
-  3: '#22c55e', // Mastered -> easy/green
+  1: '#ef4444', // Struggled -> red
+  2: '#f97316', // Shaky -> orange
+  3: '#eab308', // Satisfactory -> yellow
+  4: '#22c55e', // Mastered -> green
 };
 
 export default function ConfidenceDonutChart({ data }: { data: ConfidenceStat[] }) {

@@ -6,12 +6,14 @@ import { DueProblem } from '@/lib/types';
 import { createNote } from '@/lib/api';
 import DifficultyBadge from '@/components/DifficultyBadge';
 import TagPill from '@/components/TagPill';
+import QuestionContent from '@/components/QuestionContent';
 
 export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
   const [revealed, setRevealed] = useState(false);
   const [attempting, setAttempting] = useState(false);
   const [approach, setApproach] = useState('');
   const [saving, setSaving] = useState(false);
+  const [showQuestion, setShowQuestion] = useState(false);
 
   async function handleSubmitApproach(e: React.FormEvent) {
     e.preventDefault();
@@ -79,17 +81,36 @@ export default function BlindRevisionRow({ problem }: { problem: DueProblem }) {
       )}
 
       {revealed && (
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-white/10 pt-3">
-          <DifficultyBadge difficulty={problem.difficulty} />
-          {problem.tags.map((tag) => (
-            <TagPill key={tag} tag={tag} />
-          ))}
-          <span className="ml-auto text-xs text-text-muted">
-            {problem.days_since}d overdue (every {problem.interval_days}d) ·{' '}
-            <Link href={`/problems/${problem.id}`} className="text-accent hover:text-accent-hover">
-              Full history
-            </Link>
-          </span>
+        <div className="mt-3 border-t border-white/10 pt-3">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <DifficultyBadge difficulty={problem.difficulty} />
+            {problem.tags.map((tag) => (
+              <TagPill key={tag} tag={tag} />
+            ))}
+            <button
+              type="button"
+              onClick={() => setShowQuestion((s) => !s)}
+              className="text-xs text-accent hover:text-accent-hover"
+            >
+              {showQuestion ? 'Hide question' : 'View question'}
+            </button>
+            <span className="ml-auto text-xs text-text-muted">
+              {problem.days_since}d overdue (every {problem.interval_days}d) ·{' '}
+              <Link href={`/problems/${problem.id}`} className="text-accent hover:text-accent-hover">
+                Full history
+              </Link>
+            </span>
+          </div>
+
+          {showQuestion && (
+            <div className="mt-3 max-h-96 overflow-y-auto rounded-lg border border-white/10 bg-black/20 p-3">
+              <QuestionContent
+                content={problem.content}
+                isPaidOnly={problem.is_paid_only}
+                leetcodeSlug={problem.leetcode_slug}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -18,15 +18,15 @@ export default function RevisionBoard({ problems }: { problems: DueProblem[] }) 
             role="switch"
             aria-checked={blind}
             onClick={() => setBlind((b) => !b)}
-            className={`relative h-5 w-9 rounded-full transition-colors ${
+            className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border p-0 transition-colors ${
               blind
-                ? 'bg-accent shadow-[0_0_12px_rgba(99,102,241,0.5)]'
-                : 'border border-white/10 bg-white/5'
+                ? 'border-transparent bg-accent shadow-[0_0_12px_rgba(99,102,241,0.5)]'
+                : 'border-white/10 bg-white/5'
             }`}
           >
             <span
-              className={`absolute top-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
-                blind ? 'translate-x-4' : 'translate-x-0.5'
+              className={`absolute top-px left-0.5 h-4 w-4 rounded-full bg-white transition-transform ${
+                blind ? 'translate-x-4' : 'translate-x-0'
               }`}
             />
           </button>

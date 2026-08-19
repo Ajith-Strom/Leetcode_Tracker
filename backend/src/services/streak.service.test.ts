@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { computeStreaks } from './streak.service';
 
-const TODAY = new Date('2026-08-19T12:00:00Z'); // a Wednesday
+const TODAY = '2026-08-19'; // a Wednesday
 
 describe('computeStreaks', () => {
   it('returns zero streaks for no activity', () => {

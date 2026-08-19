@@ -33,6 +33,8 @@ export async function runSync(username: string): Promise<{ newProblems: number; 
       slug: submission.titleSlug,
       difficulty: questionData.difficulty,
       firstSolvedDate: toDateString(submission.timestamp),
+      content: questionData.content,
+      isPaidOnly: questionData.isPaidOnly,
     });
 
     for (const tag of questionData.topicTags) {

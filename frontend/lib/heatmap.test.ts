@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { groupActivityIntoWeeks, getIntensityLevel } from './heatmap';
+import { groupActivityIntoWeeks, getIntensityLevel, getMonthLabels } from './heatmap';
 import { DayActivity } from './types';
 
 function makeDays(startDate: string, count: number): DayActivity[] {
@@ -42,6 +42,36 @@ describe('groupActivityIntoWeeks', () => {
     const weeks = groupActivityIntoWeeks(days);
     expect(weeks).toHaveLength(2);
     expect(weeks.every((w) => w.every((d) => d !== null))).toBe(true);
+  });
+});
+
+describe('getMonthLabels', () => {
+  it('returns an empty array for no weeks', () => {
+    expect(getMonthLabels([])).toEqual([]);
+  });
+
+  it('labels only the first week of each new month', () => {
+    // spans late July into August: 2026-07-26 (Sun) through 2026-08-15 (Sat), 3 weeks
+    const days = makeDays('2026-07-26', 21);
+    const weeks = groupActivityIntoWeeks(days);
+    const labels = getMonthLabels(weeks);
+
+    expect(labels).toHaveLength(weeks.length);
+    expect(labels[0]).toBe('Jul');
+    // the week containing Aug 1 (2026-08-02, a Sunday) should be labeled Aug
+    const augWeekIdx = weeks.findIndex((w) => w.some((d) => d?.date === '2026-08-02'));
+    expect(labels[augWeekIdx]).toBe('Aug');
+    // every other week should be unlabeled
+    const labeledCount = labels.filter((l) => l !== '').length;
+    expect(labeledCount).toBe(2);
+  });
+
+  it('leaves a fully-null padding week unlabeled', () => {
+    const days = makeDays('2026-08-19', 3); // Wed-Fri, padded week has leading nulls only
+    const weeks = groupActivityIntoWeeks(days);
+    const labels = getMonthLabels(weeks);
+    // single week here, first real day is Aug 19 -> labeled Aug
+    expect(labels[0]).toBe('Aug');
   });
 });
 

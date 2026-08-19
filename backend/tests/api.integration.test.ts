@@ -38,12 +38,12 @@ describe('notes API', () => {
   it('doubles the interval on a second Mastered review', async () => {
     const first = await request(app)
       .post(`/api/problems/${problemId}/notes`)
-      .send({ type: 'review', content: 'nailed it', confidence_score: 3 });
+      .send({ type: 'review', content: 'nailed it', confidence_score: 4 });
     expect(first.body.intervalDays).toBe(30);
 
     const second = await request(app)
       .post(`/api/problems/${problemId}/notes`)
-      .send({ type: 'review', content: 'still solid', confidence_score: 3 });
+      .send({ type: 'review', content: 'still solid', confidence_score: 4 });
     expect(second.body.intervalDays).toBe(60);
   });
 

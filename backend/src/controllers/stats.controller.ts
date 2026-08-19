@@ -24,8 +24,9 @@ export async function getStreakStats(req: Request, res: Response) {
 
 const CONFIDENCE_LABELS: Record<number, string> = {
   1: 'Struggled',
-  2: 'Satisfactory',
-  3: 'Mastered',
+  2: 'Shaky',
+  3: 'Satisfactory',
+  4: 'Mastered',
 };
 
 export async function getConfidenceStats(_req: Request, res: Response) {

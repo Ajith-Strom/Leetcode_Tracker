@@ -7,8 +7,9 @@ import { formatDate } from '@/lib/format';
 
 const CONFIDENCE_LABELS: Record<number, string> = {
   1: 'Struggled',
-  2: 'Satisfactory',
-  3: 'Mastered',
+  2: 'Shaky',
+  3: 'Satisfactory',
+  4: 'Mastered',
 };
 
 export default async function PlaybookPage() {

@@ -5,6 +5,7 @@ import NoteList from '@/components/NoteList';
 import DifficultyBadge from '@/components/DifficultyBadge';
 import TagPill from '@/components/TagPill';
 import PatternManager from '@/components/PatternManager';
+import QuestionContent from '@/components/QuestionContent';
 import { formatDate } from '@/lib/format';
 
 export default async function ProblemDetailPage({
@@ -47,6 +48,15 @@ export default async function ProblemDetailPage({
             View on LeetCode ↗
           </a>
         </div>
+      </div>
+
+      <h2 className="text-sm font-semibold text-text mb-3">Question</h2>
+      <div className="glass-panel p-4 mb-8">
+        <QuestionContent
+          content={problem.content ?? null}
+          isPaidOnly={problem.is_paid_only ?? false}
+          leetcodeSlug={problem.leetcode_slug}
+        />
       </div>
 
       <h2 className="text-sm font-semibold text-text mb-3">Patterns</h2>
