@@ -21,17 +21,24 @@ export default function RevisionIntervalForm({ currentDays }: { currentDays: num
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Revision interval (days):{' '}
-        <input
-          type="number"
-          min={1}
-          value={days}
-          onChange={(e) => setDays(Number(e.target.value))}
-        />
+    <form onSubmit={handleSubmit} className="flex items-center gap-2">
+      <label className="text-sm text-text-muted" htmlFor="interval">
+        Overdue after
       </label>
-      <button type="submit" disabled={saving}>
+      <input
+        id="interval"
+        type="number"
+        min={1}
+        value={days}
+        onChange={(e) => setDays(Number(e.target.value))}
+        className="w-16 rounded-md border border-border bg-surface px-2 py-1 text-sm text-text focus:border-accent focus:outline-none"
+      />
+      <span className="text-sm text-text-muted">days</span>
+      <button
+        type="submit"
+        disabled={saving}
+        className="rounded-md border border-border bg-surface-hover px-3 py-1 text-sm text-text transition-colors hover:border-accent disabled:opacity-60"
+      >
         {saving ? 'Saving...' : 'Save'}
       </button>
     </form>

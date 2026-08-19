@@ -1,16 +1,24 @@
 import { getTagStats } from '@/lib/api';
 import TagBarChart from '@/components/TagBarChart';
+import PageHeader from '@/components/PageHeader';
 
 export default async function StatsPage() {
   const tagStats = await getTagStats();
 
   return (
-    <main>
-      <h1>Topic-wise Weak Areas</h1>
+    <main className="mx-auto max-w-5xl px-8 py-10">
+      <PageHeader
+        title="Weak Areas"
+        description="Solve counts grouped by topic tag"
+      />
       {tagStats.length === 0 ? (
-        <p>No data yet. Sync some problems first.</p>
+        <div className="rounded-lg border border-dashed border-border p-10 text-center">
+          <p className="text-sm text-text-muted">No data yet. Sync some problems first.</p>
+        </div>
       ) : (
-        <TagBarChart data={tagStats} />
+        <div className="rounded-lg border border-border bg-surface p-4">
+          <TagBarChart data={tagStats} />
+        </div>
       )}
     </main>
   );

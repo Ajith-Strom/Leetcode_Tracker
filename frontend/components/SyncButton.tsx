@@ -14,10 +14,10 @@ export default function SyncButton() {
     setMessage(null);
     try {
       const result = await runSync();
-      setMessage(`Synced: ${result.newProblems} new problem(s) added.`);
+      setMessage(`+${result.newProblems} new problem${result.newProblems === 1 ? '' : 's'}`);
       router.refresh();
     } catch (err) {
-      setMessage('Sync failed. Check backend logs.');
+      setMessage('Sync failed');
       console.error(err);
     } finally {
       setLoading(false);
@@ -25,11 +25,22 @@ export default function SyncButton() {
   }
 
   return (
-    <div>
-      <button onClick={handleSync} disabled={loading}>
-        {loading ? 'Syncing...' : 'Sync'}
+    <div className="flex items-center gap-3">
+      {message && <span className="text-sm text-text-muted">{message}</span>}
+      <button
+        onClick={handleSync}
+        disabled={loading}
+        className="inline-flex items-center gap-2 rounded-md bg-accent px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {loading ? (
+          <>
+            <span className="h-3 w-3 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+            Syncing
+          </>
+        ) : (
+          'Sync'
+        )}
       </button>
-      {message && <p>{message}</p>}
     </div>
   );
 }

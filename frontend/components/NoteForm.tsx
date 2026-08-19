@@ -25,20 +25,46 @@ export default function NoteForm({ problemId }: { problemId: number }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <select value={type} onChange={(e) => setType(e.target.value as NoteType)}>
-        <option value="approach">Approach</option>
-        <option value="review">Review</option>
-      </select>
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-lg border border-border bg-surface p-4"
+    >
+      <div className="flex gap-1 mb-3">
+        {(['approach', 'review'] as NoteType[]).map((t) => (
+          <button
+            key={t}
+            type="button"
+            onClick={() => setType(t)}
+            className={`rounded-md px-3 py-1 text-xs font-medium capitalize transition-colors ${
+              type === t
+                ? 'bg-accent/15 text-accent'
+                : 'text-text-muted hover:bg-surface-hover'
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="Write your notes..."
+        placeholder={
+          type === 'approach'
+            ? 'How did you approach this problem?'
+            : "What's worth remembering next time?"
+        }
         rows={4}
+        className="w-full resize-none rounded-md border border-border bg-bg px-3 py-2 text-sm text-text placeholder:text-text-muted focus:border-accent focus:outline-none"
       />
-      <button type="submit" disabled={saving}>
-        {saving ? 'Saving...' : 'Add Note'}
-      </button>
+      <div className="mt-3 flex justify-end">
+        <button
+          type="submit"
+          disabled={saving || !content.trim()}
+          className="rounded-md bg-accent px-3.5 py-1.5 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:opacity-50"
+        >
+          {saving ? 'Saving...' : 'Add Note'}
+        </button>
+      </div>
     </form>
   );
 }
